@@ -1,5 +1,14 @@
 # Sparse Feedback
 
+<!-- **Authors:** -->
+
+
+<h1 align="center"><img src="main_fig.png" width="75%"></h1>
+
+[Hritik Bansal](https://sites.google.com/view/hbansal), [John Dang](https://www.johndang.me/), [Aditya Grover](https://aditya-grover.github.io/)
+
+#### 📰 <a href="" style="color: black; text-decoration: underline;text-decoration-style: dotted;">Paper</a>
+
 ## Installation
 
 ```pip install -r requirements.txt```
