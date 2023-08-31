@@ -5,7 +5,7 @@
 
 <h1 align="center"><img src="main_fig.png" width="75%"></h1>
 
-## Peering Through Preferences: Unraveling Feedback Acquisition for Aligning Large Language Models 📰 <a href="" style="color: black; text-decoration: underline;text-decoration-style: dotted;">Paper</a>
+## Peering Through Preferences: Unraveling Feedback Acquisition for Aligning Large Language Models 📰 <a href="https://arxiv.org/abs/2308.15812" style="color: black; text-decoration: underline;text-decoration-style: dotted;">Paper</a>
 **Authors:** [Hritik Bansal](https://sites.google.com/view/hbansal), [John Dang](https://www.johndang.me/), [Aditya Grover](https://aditya-grover.github.io/)
 
 
