@@ -35,7 +35,7 @@ model  = LlamaForSequenceClassification.from_pretrained(args.alpaca_model_path, 
 model = PeftModel.from_pretrained(model, args.reward_model_path, device_map={"": current_device})
 
 #### Use the following code snippet to load our pretrained reward models and comment the above line
-#### This is because PEFT library underwent improvements after we trained our reward models. 
+#### Our pretrained reward models were trained with older PEFT library which required the models to be loaded in the way below. 
 '''
 model  = prepare_model_for_int8_training(model)
 peft_config = LoraConfig(task_type=TaskType.SEQ_CLS, inference_mode=False, r=args.lora_r, lora_alpha=16, lora_dropout=0.05, target_modules = ["q_proj", "v_proj"])
