@@ -33,6 +33,19 @@ tokenizer.pad_token_id = (0)
 tokenizer.padding_side = "left" 
 model  = LlamaForSequenceClassification.from_pretrained(args.alpaca_model_path, num_labels = 1, load_in_8bit=True, torch_dtype=torch.float16, device_map={"": current_device})
 model = PeftModel.from_pretrained(model, args.reward_model_path, device_map={"": current_device})
+
+#### Use the following code snippet to load our pretrained reward models and comment the above line
+#### This is because PEFT library underwent improvements after we trained our reward models. 
+'''
+model  = prepare_model_for_int8_training(model)
+peft_config = LoraConfig(task_type=TaskType.SEQ_CLS, inference_mode=False, r=args.lora_r, lora_alpha=16, lora_dropout=0.05, target_modules = ["q_proj", "v_proj"])
+model = get_peft_model(model, peft_config)
+ckpt_path = os.path.join(args.reward_model_path, 'pytorch_model.bin')
+with open(ckpt_path, 'rb') as f:
+    ckpt = torch.load(f, map_location = f"cuda:{current_device}")
+model.load_state_dict(ckpt, strict = False) ## strict = False because our checkpoints have rotary_emb_inv_freq param which is not present in current definition of LLaMA
+'''
+
 print('Model Loaded')
 model.eval()
 
