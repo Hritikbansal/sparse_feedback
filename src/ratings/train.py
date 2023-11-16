@@ -63,14 +63,18 @@ def main():
 
     num_labels = 1 
 
-    tokenizer = LlamaTokenizerFast.from_pretrained(script_args.model_name)
-    tokenizer.pad_token_id = (0)
-    tokenizer.padding_side = "left"  # Allow batched inference
-    model  = LlamaForSequenceClassification.from_pretrained(script_args.model_name, num_labels = num_labels, load_in_8bit=True, torch_dtype=torch.float16, device_map = "auto", low_cpu_mem_usage=True)
-    model  = prepare_model_for_int8_training(model)
-    peft_config = LoraConfig(task_type=TaskType.SEQ_CLS, inference_mode=False, r=script_args.lora_r, lora_alpha=16, lora_dropout=0.05, target_modules = ["q_proj", "v_proj"])
-    model = get_peft_model(model, peft_config)
-    model.print_trainable_parameters()
+    if 'roberta' in script_args.model_name:
+        tokenizer = AutoTokenizer.from_pretrained(script_args.model_name)
+        model = AutoModelForSequenceClassification.from_pretrained(script_args.model_name, num_labels = num_labels)  
+    else:
+        tokenizer = LlamaTokenizerFast.from_pretrained(script_args.model_name)
+        tokenizer.pad_token_id = (0)
+        tokenizer.padding_side = "left"  # Allow batched inference
+        model  = LlamaForSequenceClassification.from_pretrained(script_args.model_name, num_labels = num_labels, load_in_8bit=True, torch_dtype=torch.float16, device_map = "auto")
+        model  = prepare_model_for_int8_training(model)
+        peft_config = LoraConfig(task_type=TaskType.SEQ_CLS, inference_mode=False, r=script_args.lora_r, lora_alpha=16, lora_dropout=0.05, target_modules = ["q_proj", "v_proj"])
+        model = get_peft_model(model, peft_config)
+        model.print_trainable_parameters()
 
     train_dataset = RewardDataset(script_args.train_input_csv, tokenizer)
     print(len(train_dataset))
