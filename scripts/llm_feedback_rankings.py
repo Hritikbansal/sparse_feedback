@@ -9,7 +9,7 @@ from constants import RANKINGS_PROMPT
 
 parser = argparse.ArgumentParser()
 
-parser.add_argument('--gpt_version', choices=['gpt-3.5-turbo', 'gpt-4'], default='gpt-4')
+parser.add_argument('--gpt_version', choices=['gpt-3.5-turbo', 'gpt-4'], default='gpt-3.5-turbo')
 parser.add_argument('--input_csv', type = str, default = 'chatgpt_feedback/without_dolly/test_pairwise_data.csv')
 parser.add_argument('--save_feedback_csv', type = str, default = None)
 parser.add_argument('--start_index', type = int, default = 0)
@@ -44,6 +44,8 @@ def main():
     df = df.iloc[args.start_index:]
 
     for j in tqdm(range(len(df))):
+        if j != 0 and j % 20 == 0:
+            time.sleep(5)
         try:
             instruction = df.iloc[j]['instruction']
             input = df.iloc[j]['input']

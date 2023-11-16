@@ -6,7 +6,6 @@ import argparse
 import transformers
 import pandas as pd
 from tqdm import tqdm
-from peft import LoraConfig, prepare_model_for_int8_training, TaskType, get_peft_model
 from peft import PeftModel
 from transformers import (
     LlamaForSequenceClassification,
