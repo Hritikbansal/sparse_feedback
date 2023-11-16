@@ -1,4 +1,14 @@
-# Sparse Feedback
+# Sparse Feedback  
+[Paper](https://arxiv.org/abs/2308.15812) [🤗Data](https://huggingface.co/datasets/hbXNov/sparse_feedback) [🤗Rating Reward Model](https://huggingface.co/hbXNov/reward_model_rating/tree/main) [🤗Ranking Reward Model](https://huggingface.co/hbXNov/reward_model_ranking/tree/main)
+
+<!-- **Authors:** -->
+
+
+<h1 align="center"><img src="main_fig.png" width="75%"></h1>
+
+## Peering Through Preferences: Unraveling Feedback Acquisition for Aligning Large Language Models 
+**Authors:** [Hritik Bansal](https://sites.google.com/view/hbansal), [John Dang](https://www.johndang.me/), [Aditya Grover](https://aditya-grover.github.io/)
+
 
 ## Installation
 
@@ -77,6 +87,8 @@ Some of the code is adopted from [Alpaca-LoRA](https://github.com/tloen/alpaca-l
  CUDA_VISIBLE_DEVICES=4 python train.py  --output_dir <dir> --train_input_csv <train.csv> --test_input_csv <val.csv> --model_name <path to alpaca 7b>
 ```
 4. You should be able to see the trained checkpoints being stored in your `output_dir` after every epoch.
+5. 
+Our pretrained Checkpoint is present [🤗 here](https://huggingface.co/hbXNov/reward_model_rating/tree/main). Please note that you need to make a few changes to the code to load this checkpoint as mentioned [here](https://github.com/Hritikbansal/sparse_feedback/blob/main/inference/reranking.py#L37).
 
 #### Rankings Reward Model
 
@@ -99,7 +111,8 @@ where `[a1, a2]` and `[a3, a4]` are pair of responses for the instruction `i1` s
 CUDA_VISIBLE_DEVICES=4 python train.py --per_device_train_batch_size 1 --output_dir <output_dir> --train_input <train.json> --test_input <val.json> --model_name <path to alpaca 7b> --learning_rate 1e-4 --run_name test --gradient_accumulation_steps 4 
 ```
 4. You should be able to see the trained checkpoints being stored in your `output_dir` after every epoch.
-
+5. Our pretrained Checkpoint is present [🤗 here](https://huggingface.co/hbXNov/reward_model_ranking/tree/main). Please note that you need to make a few changes to the code to load this checkpoint as mentioned [here](https://github.com/Hritikbansal/sparse_feedback/blob/main/inference/reranking.py#L37).
+ 
 ### Best-of-64 Policy (Re-Ranking)
 
 1. We utilize [AlpacaEval](https://github.com/tatsu-lab/alpaca_eval/blob/main/example/outputs.json) (thanks to the developers!) as the outputs of the reference model `text-davinci-003` on unseen instructions data.
